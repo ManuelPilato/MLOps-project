@@ -1,6 +1,5 @@
 name: MLOps Sentiment Pipeline
 
-# trigger for every push
 on:
   push:
     branches: [ "main" ]
@@ -15,7 +14,6 @@ jobs:
         working-directory: ./MachineInnovators
 
     steps:
-      # loads the code 
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -24,21 +22,21 @@ jobs:
         with:
           python-version: '3.12'
 
-      #  dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          # È necessario installare huggingface_hub per usare la CLI
+          pip install huggingface_hub
 
-      # PIPELINE (Training + Test Assert + Saving)
       - name: Run Training & Validation Pipeline
         run: |
           python train.py
 
-      # upload in hugging fase using a token (to config inside github)
       - name: Upload to Hugging Face Hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        # Nota l'indentazione qui sotto: è fondamentale!
         run: |
-        echo "Pipeline superata con successo. Modello salvato in ./project/sentiment_model"
-        huggingface-cli upload MPili22/MLOps ./sentiment_model . --token $HF_TOKEN
+          echo "Pipeline superata con successo. Preparazione upload..."
+          huggingface-cli upload MPili22/MLOps ./sentiment_model . --token $HF_TOKEN
