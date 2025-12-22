@@ -12,7 +12,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: ./project
+        working-directory: ./MachineInnovators
 
     steps:
       # loads the code 
@@ -22,7 +22,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       #  dependencies
       - name: Install dependencies
@@ -40,5 +40,5 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          echo "Pipeline superata con successo. Modello salvato in ./project/sentiment_model"
+        echo "Pipeline superata con successo. Modello salvato in ./project/sentiment_model"
         huggingface-cli upload MPili22/MLOps ./sentiment_model . --token $HF_TOKEN
