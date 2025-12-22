@@ -1,0 +1,44 @@
+name: MLOps Sentiment Pipeline
+
+# trigger for every push
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./project
+
+    steps:
+      # loads the code 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      #  dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # PIPELINE (Training + Test Assert + Saving)
+      - name: Run Training & Validation Pipeline
+        run: |
+          python train.py
+
+      # upload in hugging fase using a token (to config inside github)
+      - name: Upload to Hugging Face Hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          echo "Pipeline superata con successo. Modello salvato in ./project/sentiment_model"
+        huggingface-cli upload MPili22/MLOps ./sentiment_model . --token $HF_TOKEN
