@@ -35,4 +35,4 @@ jobs:
         # Nota l'indentazione qui sotto: è fondamentale!
         run: |
           echo "Pipeline superata con successo. Preparazione upload..."
-          huggingface-cli upload MPili22/MLOps ./sentiment_model . --token $HF_TOKEN
+          hf upload MPili22/MLOps ./sentiment_model . --token $HF_TOKEN
