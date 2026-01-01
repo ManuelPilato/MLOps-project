@@ -18,7 +18,7 @@ def download():
     return model
 
 def save(model):
-    output_dir = "./model"
+    output_dir = "./sentiment_model"
     print(f"saving model in {output_dir}")
 
     model.save_pretrained(output_dir)
