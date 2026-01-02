@@ -23,11 +23,18 @@ def download():
 #saving the model locally in the folder sentiment_model
 def save(model):
     output_dir = "./sentiment_model"
-    print(f"saving model in {output_dir}")
+    #check if the folder already exists
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir, exist_ok=True)
+        print(f"saving model in {output_dir}")
 
-    model.save_pretrained(output_dir)
-    print("Model saved correctly.")
+    try:
+        model.save_pretrained(output_dir)
+        print("Model saved .")
 
+    except Exception as e:
+        print(f"Error during saving: {e}")
+        sys.exit(1)
 
 #accuracy tests of the model using another dataset
 def test_dataset(model):
@@ -39,11 +46,15 @@ def test_dataset(model):
         "positive": 2
     }
 
-    #taking a dataset that fits the model
-    ds = load_dataset("tweet_eval", "sentiment",  split="test")
+    try:
+        #taking a dataset that fits the model
+        ds = load_dataset("tweet_eval", "sentiment",  split="test")
 
-    subset = ds.shuffle(seed=42).select(range(100))
-    
+        subset = ds.shuffle(seed=42).select(range(100))
+    except Exception as e:
+        print(f"Error loading dataset: {e}")
+        sys.exit(1)
+            
     #print(type(subset[0]))
     #for i in range(0,10):
     #    print(subset[i])
