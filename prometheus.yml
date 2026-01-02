@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 5s #reads data every 5 sec
+
+scrape_configs:
+  - job_name: 'mlops-sentiment-app'
+    static_configs:
+    #app running outside docker (frontend) meanwhile 
+    #prometheus is running inside docker (backend) in the same port 
+      - targets: ['host.docker.internal:7860']

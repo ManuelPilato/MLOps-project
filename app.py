@@ -1,11 +1,11 @@
 import os
 import time
 import sys
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.testclient import TestClient
 from pydantic import BaseModel
 from transformers import pipeline
-from prometheus_client import Counter, Histogram, make_asgi_app
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 import uvicorn
 
 #this part is for grafana using prometheus functions
@@ -86,7 +86,16 @@ def predict(request: SentimentRequest):
 
 #ENDPOINT 4: metrics
 # from here, prometheus will take data to analyze 
-app.mount("/metrics", make_asgi_app())
+#NB: this way it doesn't work.
+# app.mount("/metrics", make_asgi_app())
+
+#let's make a dedicated GET function like this:
+@app.get("/metrics")
+def metrics():
+    return Response(
+        content=generate_latest(), 
+        media_type=CONTENT_TYPE_LATEST
+    )
 
 
 def tests():
