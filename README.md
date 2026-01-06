@@ -77,3 +77,7 @@ Esempio di corpo della richiesta (JSON):
 ## Analisi grafica del modello con Grafana:
 <img width="1470" height="802" alt="Screenshot 2026-01-02 at 17 58 58" src="https://github.com/user-attachments/assets/2dada290-cc1d-41f8-bc29-fbdfca24c776" />
 
+
+## Hugging Face
+è possibile trovare il modello nella seguente pagina Hugging Face: https://huggingface.co/MPili22
+oppure, per provare il modello, usare l'URL diretto: https://mpili22-mlops.hf.space (seguito da /docs per usare l'interfaccia grafica) 
