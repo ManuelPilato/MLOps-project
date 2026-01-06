@@ -37,4 +37,4 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           echo "CI/CD succeded upload in HF..."
-          hf upload MPili22/MLOps . . --token "$HF_TOKEN"
+          hf upload MPili22/MLOps . . --repo-type space --token "$HF_TOKEN"
